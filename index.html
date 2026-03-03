@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kacy Tran Portfolio</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#ffffff;
+  color:#333;
+}
+
+.hero{
+  background:#F76902;
+  color:white;
+  padding:60px 8vw;
+}
+.hero h1{ margin:0; font-size:38px; }
+
+.hero-links{
+  background:#F76902;
+  text-align:center;
+  padding-bottom:25px;
+}
+.hero-links a{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+  font-size:16px;
+  border:2px solid white;
+  padding:10px 20px;
+  border-radius:30px;
+  transition:.3s;
+}
+.hero-links a:hover{ background:white; color:#F76902; }
+.github-icon{ font-size:18px; }
+
+.container{
+  display:flex;
+  max-width:1200px;
+  margin:50px auto;
+  gap:60px;
+}
+
+.sidebar{ width:250px; }
+.sidebar button{
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:14px;
+  border:none;
+  background:white;
+  color:#F76902;
+  font-weight:700;
+  cursor:pointer;
+  text-align:left;
+  border-left:4px solid transparent;
+  transition:.3s;
+}
+.sidebar button:hover{
+  border-left:4px solid #F76902;
+  background:#fff3eb;
+}
+
+
+.content{ flex:1; min-height:500px; }
+.section{ display:none; animation:fade .4s ease; }
+.section.active{ display:block; }
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+
+.profile{
+  display:flex;
+  gap:40px;
+  align-items:flex-start;
+}
+.profile img{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  border:5px solid #F76902;
+  object-fit:cover;
+}
+.profile-info h2{
+  margin:0;
+  color:#F76902;
+  font-size:28px;
+}
+.profile-info p{ margin-top:15px; line-height:1.7; }
+
+.contribution-wrapper{ margin-top:35px; }
+.contribution-layout{ display:flex; flex-direction:column; gap:30px; }
+.heatmap-section{ flex:2; }
+
+.stats-section{
+  flex:1;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  border:1px solid #eee;
+  box-shadow:0 8px 25px rgba(247,105,2,.08);
+}
+
+.stat-grid{ display:flex; gap:15px; margin-top:20px; }
+.stat-mini{
+  flex:1;
+  text-align:center;
+  padding:15px;
+  border-radius:8px;
+  background:#fff3eb;
+}
+
+.contribution-title{
+  font-size:16px;
+  color:#F76902;
+  margin-bottom:15px;
+}
+
+.heatmap{
+  display:flex;
+  gap:4px;
+  overflow-x:auto;
+  padding-bottom:6px;
+}
+.week{ display:flex; flex-direction:column; gap:4px; }
+.day{
+  width:14px;
+  height:14px;
+  border-radius:3px;
+  background:#f5f5f5;
+  transition:.2s;
+}
+.day:hover{ transform:scale(1.2); border:1px solid #F76902; }
+.level-0{ background:#f5f5f5; }
+.level-1{ background:#ffe5d4; }
+.level-2{ background:#ffb38a; }
+.level-3{ background:#ff7a33; }
+.level-4{ background:#F76902; }
+
+.legend{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:15px;
+  font-size:12px;
+  color:#777;
+}
+.legend-box{ width:14px; height:14px; border-radius:3px; }
+
+.card{
+  background:white;
+  border:1px solid #eee;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:25px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 35px rgba(247,105,2,.2);
+}
+.card h3{ margin-top:0; color:#F76902; }
+/* ===== FUN INTERACTIVE ACHIEVEMENTS ===== */
+
+.achievement-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:30px;
+}
+
+.achievement-card{
+  background:white;
+  border:1px solid #eee;
+  border-radius:16px;
+  padding:30px 20px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+
+.achievement-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(247,105,2,.25);
+}
+
+.achievement-card .emoji{
+  font-size:40px;
+  margin-bottom:15px;
+}
+
+.achievement-card h3{
+  color:#F76902;
+  margin:10px 0 6px 0;
+}
+
+.achievement-card span{
+  font-size:13px;
+  color:#777;
+}
+
+.achievement-hidden{
+  margin-top:15px;
+  font-size:14px;
+  color:#b84300;
+  opacity:0;
+  transition:.3s;
+}
+
+/* ===== PROJECTS GRID ===== */
+#projects.section.active{
+  display:block;
+  width:100%;
+}
+
+.project-carousel{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+  gap:30px;
+  width:100%;
+  margin-top:30px;
+}
+
+.project-card{
+  width:100%;
+  min-height:180px;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.project-btn{
+  margin-top:20px;
+  display:inline-block;
+  padding:10px 18px;
+  background:#F76902;
+  color:white;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+  text-decoration:none;
+  transition:.25s;
+  align-self:flex-start;
+}
+.project-btn:hover{
+  background:#d85c00;
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(247,105,2,.25);
+}
+
+
+.timeline-container{
+  position:relative;
+  margin-top:60px;
+  padding-top:40px;
+}
+.timeline-line{
+  height:4px;
+  background:#F76902;
+  width:100%;
+  position:absolute;
+  top:0;
+  left:0;
+}
+.timeline{
+  display:flex;
+  justify-content:space-between;
+  position:relative;
+}
+.timeline-item{
+  text-align:center;
+  width:22%;
+  position:relative;
+}
+.timeline-item::before{
+  content:"";
+  width:18px;
+  height:18px;
+  background:#F76902;
+  border-radius:50%;
+  position:absolute;
+  top:-11px;
+  left:50%;
+  transform:translateX(-50%);
+}
+.timeline-item h3{ margin-top:20px; color:#F76902; }
+.timeline-item span{ font-size:13px; color:#777; }
+
+/* ===== LEADERSHIP (VERTICAL) ===== */
+.timeline-vertical{
+  border-left:4px solid #F76902;
+  padding-left:25px;
+  margin-top:20px;
+}
+.timeline-vertical .timeline-item{
+  width:100%;
+  text-align:left;
+  box-sizing:border-box;
+  margin-bottom:30px;
+  position:relative;
+  padding:16px 16px 16px 18px;
+  border-radius:12px;
+  border:1px solid #eee;
+  background:white;
+  transition:.25s;
+}
+.timeline-vertical .timeline-item:hover{
+  box-shadow:0 14px 30px rgba(247,105,2,.14);
+  transform:translateY(-2px);
+}
+.timeline-vertical .timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-33px;
+  top:22px;
+  width:14px;
+  height:14px;
+  background:#F76902;
+  border-radius:50%;
+}
+.timeline-vertical h3{
+  margin:0 0 8px 0;
+  color:#F76902;
+}
+
+.leadership-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.leadership-header h3{ margin:0; }
+
+.leadership-controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.leadership-controls input{
+  border:1px solid #eee;
+  padding:10px 12px;
+  border-radius:10px;
+  outline:none;
+  min-width:220px;
+}
+.leadership-controls button{
+  border:none;
+  background:#fff3eb;
+  color:#F76902;
+  font-weight:700;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+.leadership-controls button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(247,105,2,.12);
+}
+
+.role-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:18px 0 22px 0;
+}
+.role-tab{
+  border:1px solid #eee;
+  background:white;
+  padding:10px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:700;
+  color:#F76902;
+  transition:.2s;
+  user-select:none;
+}
+.role-tab:hover{ background:#fff3eb; }
+.role-tab.active{
+  background:#F76902;
+  color:white;
+  border-color:#F76902;
+}
+
+.lead-title{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  cursor:pointer;
+  width:100%;
+}
+.lead-title > div:first-child{ flex:1; min-width:0; }
+.lead-meta{
+  flex:0 0 auto;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:flex-start;
+}
+.chip{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff3eb;
+  color:#b84300;
+  font-weight:700;
+  border:1px solid rgba(247,105,2,.18);
+}
+.expand-icon{
+  font-weight:900;
+  color:#F76902;
+  line-height:1;
+  margin-top:2px;
+  transition:.2s;
+}
+.lead-body{
+  margin-top:10px;
+  line-height:1.7;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height .35s ease, opacity .25s ease;
+}
+.timeline-item.open .lead-body{
+  max-height:240px;
+  overflow-y:auto;
+  padding-right:8px;
+  opacity:1;
+}
+.timeline-item.open .lead-body::-webkit-scrollbar{ width:10px; }
+.timeline-item.open .lead-body::-webkit-scrollbar-thumb{
+  background:rgba(247,105,2,.25);
+  border-radius:999px;
+}
+.timeline-item.open .lead-body::-webkit-scrollbar-track{ background:transparent; }
+.timeline-item.open .expand-icon{ transform:rotate(45deg); }
+
+
+.cert-filter{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.cert-btn{
+  border:1px solid #eee;
+  background:white;
+  padding:8px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:700;
+  color:#F76902;
+  transition:.2s;
+  user-select:none;
+}
+.cert-btn:hover{ background:#fff3eb; }
+.cert-btn.active{
+  background:#F76902;
+  color:white;
+  border-color:#F76902;
+}
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:20px;
+}
+.cert-card{
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+}
+.cert-card p{ margin:0; color:#555; }
+
+/* ===== MODAL ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:999;
+}
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:600px;
+  padding:30px;
+  border-radius:16px;
+  position:relative;
+  animation:fade .3s ease;
+}
+.modal-close{
+  position:absolute;
+  top:12px;
+  right:15px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:20px;
+  color:#F76902;
+}
+
+footer{
+  text-align:center;
+  padding:40px;
+  background:#F76902;
+  color:white;
+  margin-top:80px;
+}
+
+@media(max-width:900px){
+  .container{
+    flex-direction:column;
+    padding:0 8vw;
+  }
+  .profile{
+    flex-direction:column;
+    text-align:center;
+  }
+  .timeline{
+    flex-direction:column;
+    gap:40px;
+  }
+  .timeline-item{ width:100%; }
+  .leadership-controls input{
+    min-width:160px;
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="hero">
+  <h1>Kacy Tran | Undergraduate Student - Knox College</h1>
+</div>
+
+<div class="hero-links">
+  <a href="https://github.com/kacytran1122" target="_blank" rel="noopener">
+    <span class="github-icon">🐙</span>
+    github.com/kacytran1122
+  </a>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <button onclick="showSection('about')">Overview</button>
+    <button onclick="showSection('projects')">Projects</button>
+    <button onclick="showSection('achievements')">Awards/Honors</button>
+    <button onclick="showSection('leadership')">Leadership</button>
+    <button onclick="showSection('registration')">Certification</button>
+    <button onclick="showSection('coffeeLab')">Fun Simulation 1</button>
+    <button onclick="showSection('trafficGame')">Fun Simulation 2</button>
+    
+    
+  </div>
+
+  <div class="content">
+
+    
+    <div id="about" class="section active">
+      <div class="profile">
+       
+        <img src="Screenshot 2026-03-01 041819.png" alt="Kacy Tran Profile Photo">
+
+        <div class="profile-info">
+          <h2>Kacy Tran</h2>
+          <p>
+            Howdy! I’m Chau Tran, but you can call me Kacy. I’m currently double majoring in Computer Science and Data Science, and yes, I officially declared them because I like committing to my chaos early. I’ve always been curious about finance and the world of big data, which explains why I’m drawn to becoming an AI engineer or maybe even a quant researcher someday. I enjoy working on projects where I can build models, experiment with machine learning, and turn messy data into something that actually makes sense. <br><br>
+
+            Now you might be wondering, what about retiring? Honestly, I do not really picture myself retiring quietly. I want to start my own company one day and build something meaningful from scratch. But my mom gave me some very practical advice. She told me to learn about legal matters first before doing anything big, mostly to avoid legal trouble and, as she dramatically puts it, to stay out of jail. So for now, I am dreaming big, coding hard, learning about business and maybe even law on the side, and slowly preparing myself to build something of my own in the future.
+          </p>
+        </div>
+      </div>
+
+      <div class="coursework">
+        <h3>Relevant Coursework - Related to Computer Science and Data Science Major</h3>
+        <ul>
+          <li>Introductory to Statistics (STAT 200)</li>
+          <li>Mathematical Statistics I (MATH/STAT 321)</li>
+          <li>Artificial Intelligence (CS 317)</li>
+          <li>Machine Learning (STAT/CS 323)</li>
+          <li>Programming Language with Haskell (CS 208)</li>
+          <li>Science Fiction and Human Identity (PREC 115)</li>
+          <li>Differential Equations</li>
+          <li>Neural Artificial Intelligence (CS 343 - Spring 2026)</li>
+          <li>Software Testing (CS 395O - Spring 2026)</li>
+          <li>Discrete Mathematics</li>
+          <li>Linear Algebra</li>
+        </ul>
+      </div>
+
+      <div class="contribution-wrapper">
+        <div class="contribution-layout">
+
+          <div class="heatmap-section">
+            <div class="contribution-title">Contributions</div>
+            <div class="heatmap" id="heatmap"></div>
+
+            <div class="legend">
+              <span>Less</span>
+              <div class="legend-box level-0"></div>
+              <div class="legend-box level-1"></div>
+              <div class="legend-box level-2"></div>
+              <div class="legend-box level-3"></div>
+              <div class="legend-box level-4"></div>
+              <span>More</span>
+            </div>
+          </div>
+
+          <div class="stats-section" id="contributionDetail">
+            <h3>Select a Day</h3>
+            <p>Click any grid square to view the exact date.</p>
+
+            <div class="stat-grid">
+              <div class="stat-mini">
+                <h4 style="margin:0; font-size:22px; color:#F76902;" id="statTotal">—</h4>
+                <span>Total</span>
+              </div>
+              <div class="stat-mini">
+                <h4 style="margin:0; font-size:22px; color:#F76902;" id="statWeeks">—</h4>
+                <span>Weeks Shown</span>
+              </div>
+              <div class="stat-mini">
+                <h4 style="margin:0; font-size:22px; color:#F76902;" id="statMax">—</h4>
+                <span>Max / Day</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="projects" class="section">
+      <h3 style="color:#F76902;">Featured Projects</h3>
+
+      <div class="project-carousel" id="projectCarousel">
+
+    
+
+        <div class="card project-card"
+             data-title="Melanoma Prediction System (for 1i1w competition)"
+             data-content="We analyzed and prepared over 10,000 tumor images to help identify symptoms. I developed models based on EfficientNetV2 that achieved 94% accuracy during validation on the ISIC dataset. We deployed it on Streamlit">
+          <div>
+            <h3>Melanoma Prediction</h3>
+            <p>AI medical classifier</p>
+          </div>
+          <a href="#"
+             class="project-btn"
+             onclick="event.preventDefault(); event.stopPropagation(); alert('Not yet available to view!');">
+             View Project →
+          </a>
+        </div>
+
+        <div class="card project-card"
+             data-title="Gaussian Splatting 3D Model (Ongoing)"
+             data-content="Real-time 3D reconstruction pipeline using Gaussian Splatting for volumetric rendering and interactive spatial visualization.">
+          <div>
+            <h3>Gaussian Splatting</h3>
+            <p>3D reconstruction system</p>
+          </div>
+          <a href="#"
+             class="project-btn"
+             onclick="event.preventDefault(); event.stopPropagation(); alert('Not yet available to view!');">
+             View Project →
+          </a>
+        </div>
+
+        <div class="card project-card"
+             data-title="Audio Data Visualization and Genre Classification Using Machine Learning (for ICAN competition)"
+             data-content="Audio Data Visualization and Genre Classification Using Machine Learning is a project focused on transforming raw sound signals into structured, interpretable data and using machine learning algorithms to identify musical genres. The process begins with signal preprocessing and feature extraction, including techniques such as Fast Fourier Transform and Mel Frequency Cepstral Coefficients to capture frequency, rhythm, and timbral characteristics.">
+          <div>
+            <h3>Music Genre ML</h3>
+            <p>Audio Classification</p>
+          </div>
+          <a href="#"
+             class="project-btn"
+             onclick="event.preventDefault(); event.stopPropagation(); alert('Not yet available to view!');">
+             View Project →
+          </a>
+        </div>
+
+        <div class="card project-card"
+             data-title="VSA Website (apply.vsaknox.com)"
+             data-content="Custom cultural website with interactive dragon assistant, recruitment system, and structured navigation. Built to showcase events, introduce Vietnamese culture, and support exec recruitment.">
+          <div>
+            <h3>VSA Website</h3>
+            <p>Interactive Cultural Platform</p>
+          </div>
+          <a href="https://apply.vsaknox.com"
+             target="_blank"
+             rel="noopener"
+             class="project-btn">
+             View Project →
+          </a>
+        </div>
+
+        <div class="card project-card"
+             data-title="GCCH Harvard Case 2026: Dual Track Millitary Strategy"
+             data-content="I led a strategic project where I guided a cross-functional team to analyze partnership and merger options in the European defense industry. We created a clear recommendation supported by research, financial analysis, and careful risk evaluation for a judge. The results will be available in mid-March.">
+          <div>
+            <h3>GCCH Case Strategy 2026: Dual Track</h3>
+            <p>Financial Case Study</p>
+          </div>
+          <a href="https://drive.google.com/file/d/1XJMF_yQAjuStqfHax0ZXgfxEYclubOzV/view?usp=sharing"
+             target="_blank"
+             rel="noopener"
+             class="project-btn">
+             View Project →
+          </a>
+        </div>
+
+        <div class="card project-card"
+             data-title="A Tiny Vietnam Adventure"
+             data-content="An interactive digital journey through Vietnamese culture designed as a playful exploration space. Visitors can meet a friendly dragon guide, explore traditions, discover food and celebrations, and experience the warmth of Vietnamese community life through animation and storytelling.">
+          <div>
+            <h3>A Tiny Vietnam Adventure (vietnam.vsaknox.com)</h3>
+            <p>Interactive Vietnam Animation</p>
+          </div>
+          <a href="https://vietnam.vsaknox.com"
+             target="_blank"
+             rel="noopener"
+             class="project-btn">
+             View Project →
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <div id="trafficGame" class="section">
+        <h3 style="color:#F76902;">Hanoi Traffic Escape </h3>
+        <p>Cross the street without getting hit. Good luck.</p>
+
+        <div id="gameArea" 
+            style="position:relative; height:300px; background:#f5f5f5; overflow:hidden; border-radius:12px; border:1px solid #eee;">
+
+            <div id="player"
+                style="position:absolute; bottom:10px; left:140px; font-size:28px;">
+            🚶
+            </div>
+
+        </div>
+
+        <div style="margin-top:15px;">
+            <button id="startGameBtn"
+            style="padding:8px 16px; background:#F76902; color:white; border:none; border-radius:8px; cursor:pointer;">
+            Start Game
+            </button>
+
+            <button id="moveBtn"
+            style="padding:8px 16px; background:#fff3eb; color:#F76902; border:none; border-radius:8px; cursor:pointer;">
+            Move Forward
+            </button>
+        </div>
+
+        <p id="trafficStatus" style="margin-top:15px; font-weight:700;"></p>
+    </div>
+
+    <div id="coffeeLab" class="section">
+        <h3 style="color:#F76902;">Vietnamese Coffee Lab </h3>
+        <p>Experiment with ingredients and discover authentic Vietnamese drinks.</p>
+
+        <div class="card">
+            <h3>Choose Ingredients</h3>
+
+            <div class="coffee-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; margin-top:15px;">
+
+            <label><input type="checkbox" value="robusta" data-cost="2"> Robusta Beans</label>
+            <label><input type="checkbox" value="arabica" data-cost="3"> Arabica Beans</label>
+            <label><input type="checkbox" value="condensed" data-cost="1"> Condensed Milk</label>
+            <label><input type="checkbox" value="ice" data-cost="1"> Ice</label>
+            <label><input type="checkbox" value="egg" data-cost="2"> Egg Cream</label>
+            <label><input type="checkbox" value="coconut" data-cost="2"> Coconut Milk</label>
+            <label><input type="checkbox" value="chocolate" data-cost="2"> Chocolate Syrup</label>
+
+            </div>
+
+            <button onclick="brewCoffeeAdvanced()" 
+                    style="margin-top:20px; padding:10px 18px; background:#F76902; color:white; border:none; border-radius:8px; cursor:pointer;">
+                Brew Coffee
+
+            </button>
+
+            <div style="margin-top:20px;">
+            <p><strong>Total Cost:</strong> $<span id="coffeeCost">0</span></p>
+            <p><strong>Flavor Profile:</strong> <span id="flavorProfile">—</span></p>
+            <p style="font-weight:700; color:#F76902;" id="coffeeResult"></p>
+            </div>
+        </div>
+        </div>
+
+   
+    <div id="achievements" class="section">
+        <h3 style="color:#F76902; margin-bottom:30px;">Awards/Honors</h3>
+
+        <div class="achievement-grid">
+
+            <div class="achievement-card" data-message="Yes… it was worth the late nights. ☕">
+            <div class="emoji">🥇</div>
+            <h3>Gold Medal — 1i1w</h3>
+            <span>2023</span>
+            <p class="achievement-hidden"></p>
+            </div>
+
+            <div class="achievement-card" data-message="Brain power activated. ">
+            <div class="emoji">🏅</div>
+            <h3>Gold Medal — ICAN</h3>
+            <span>2024</span>
+            <p class="achievement-hidden"></p>
+            </div>
+
+            <div class="achievement-card" data-message="Late-night study mode: ON ">
+            <div class="emoji">🎓</div>
+            <h3>Dean List — Knox College</h3>
+            <span>Fall 2025</span>
+            <p class="achievement-hidden"></p>
+            </div>
+
+            <div class="achievement-card" data-message="Be there or be square! ">
+            <div class="emoji">🎮</div>
+            <h3>Tynker Kid Coding Platform — 120k+ viewers (for 11 of my published games in total)</h3>
+            <span>Since 2017</span>
+            <p class="achievement-hidden"></p>
+            </div>
+
+        </div>
+        </div>
+
+    
+    <div id="leadership" class="section">
+      <div class="card">
+        <div class="leadership-header">
+          <div>
+            <h3>Leadership & Community Impact (High School and College)</h3>
+            <p style="margin:8px 0 0 0; color:#666; line-height:1.6;">
+              Click a role to expand details. Good luck, but most importantly, have fun!
+            </p>
+          </div>
+
+          <div class="leadership-controls">
+            <input id="leadSearch" type="text" placeholder="Search leadership (keywords)…">
+            <button id="expandAllBtn" type="button">Expand all</button>
+            <button id="collapseAllBtn" type="button">Collapse all</button>
+          </div>
+        </div>
+
+        <div class="role-tabs" id="roleTabs">
+          <div class="role-tab active" data-filter="all">All</div>
+          <div class="role-tab" data-filter="vsa">VSA</div>
+          <div class="role-tab" data-filter="tutor">Tech Tutor</div>
+          <div class="role-tab" data-filter="gcch">GCCH</div>
+          <div class="role-tab" data-filter="deca">DECA</div>
+          <div class="role-tab" data-filter="sugar">Sugar Vietnam</div>
+          <div class="role-tab" data-filter="aiesec">AIESEC</div>
+          <div class="role-tab" data-filter="church">Local Church</div>
+        </div>
+
+        <div class="timeline-vertical" id="leadList">
+
+
+          <div class="timeline-item open" data-tags="church choir music ringer">
+            <div class="lead-title">
+              <div>
+                <h3>Bell Ringer — First Presbyterian Church of Galesburg </h3>
+                <span style="font-size:13px; color:#777;">September 2025 – Present</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Performance</span>
+                <span class="chip">Music</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                I have had the wonderful opportunity to be part of the handbell choir since grade 11, performing at First Presbyterian Church of Galesburg and Lititz Moravian Church. Over the years, I’ve grown in skill and confidence, learning how to create beautiful, harmonious music with a team. Playing the bells is both challenging and joyful, and it’s been especially rewarding to share our music with church communities
+              </p>
+            </div>
+          </div>
+
+         <div class="timeline-item open" data-tags="secretary vsa students association ">
+            <div class="lead-title">
+              <div>
+                <h3>Secretary — Vietnamese Club Knox College </h3>
+                <span style="font-size:13px; color:#777;">September 2025 – Present</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Event Planning</span>
+                <span class="chip">Logistics Management</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                As Secretary of the Vietnamese Student Association at Knox College, I strengthened the organization’s digital and operational infrastructure by building its first fully functional website with interactive animations and structured navigation. I maintain official meeting documentation, coordinate executive communication, and support the planning of large-scale cultural events such as International Fair and Vietnamese Teachers’ Day.
+              </p>
+            </div>
+          </div>
+        
+          <div class="timeline-item" data-tags="tutor library digital literacy community one-on-one devices">
+            <div class="lead-title">
+              <div>
+                <h3>Tech Tutor —  Galesburg Public Library </h3>
+                <span style="font-size:13px; color:#777;">October 2025 – Present</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">1:1 coaching</span>
+                <span class="chip">Digital literacy</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                As a Technology Tutor at the Galesburg Public Library, my main goal is to help community members improve their digital skills and feel more confident using technology. I offer personalized, one-on-one support to help people navigate their devices, use online services, and learn basic computing skills. I tailor my assistance to match the different skill levels of those who seek help.
+              </p>
+            </div>
+          </div>
+
+
+          <div class="timeline-item" data-tags="gcch case competition leadership team division financial analysis strategy">
+            <div class="lead-title">
+              <div>
+                <h3>Team Leader — GCCH Harvard Financial Case Competition</h3>
+                <span style="font-size:13px; color:#777;">December 2025 – February 2026</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Case solving</span>
+                <span class="chip">Team division</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                As Team Leader for the GCCH Harvard Financial Case Competition, I led our team in analyzing and solving a complex business case within a limited time frame. I divided responsibilities based on each member’s strengths, coordinated research and financial analysis, and ensured that our final strategy was clear and well-supported.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-tags="deca finance development budgeting sponsorship fundraising reports">
+            <div class="lead-title">
+              <div>
+                <h3> Director of Finance and Development — DECA Chapter </h3>
+                <span style="font-size:13px; color:#777;">October 2023 – May 2025</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Budgeting</span>
+                <span class="chip">$1,450 raised</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                As Director of Finance and Development for my high school DECA chapter, I managed budgeting, sponsorship outreach, and financial planning for over 40 members. I developed structured fundraising strategies, prepared quarterly financial reports, and secured partnerships that generated $1,450 in revenue. My role required balancing financial oversight with long-term chapter sustainability to support competitions and organizational initiatives.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-tags="sugar vietnam duong sach workshop mentorship computer science math events">
+            <div class="lead-title">
+              <div>
+                <h3>Organizing Committee — Sugar Vietnam “The Route to Knowledge” </h3>
+                <span style="font-size:13px; color:#777;">August 2022 – May 2023</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Workshop ops</span>
+                <span class="chip">Mentorship</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                I provided one-on-one tutoring in Mathematics and English and Computer Science, carefully planning lessons and monitoring student progress. To boost motivation, I focused on practical skills while also participating in project activities such as fundraising and workshops
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item" data-tags="aiesec technical coordinator events projector troubleshooting operations">
+            <div class="lead-title">
+              <div>
+                <h3>Student Coordinator — AIESEC Vietnam (RMIT Branch)</h3>
+                <span style="font-size:13px; color:#777;">December 2021 – February 2022</span>
+              </div>
+              <div class="lead-meta">
+                <span class="chip">Tech support</span>
+                <span class="chip">Event ops</span>
+                <span class="expand-icon">+</span>
+              </div>
+            </div>
+            <div class="lead-body">
+              <p style="margin:0;">
+                As Technical Coordinator for AIESEC Vietnam, I oversaw technical setup and operational support for organizational events, including projector configuration, display systems, and troubleshooting device connectivity. I ensured smooth program flow by proactively resolving technical disruptions, contributing to professional, well-executed leadership and development events.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+   
+    <div id="registration" class="section">
+      <h3 style="color:#F76902; margin-top:0;">Certifications</h3>
+
+      <div class="cert-filter" id="certFilter">
+        <div class="cert-btn active" data-cert="all">All</div>
+        <div class="cert-btn" data-cert="ai">AI</div>
+        <div class="cert-btn" data-cert="cloud">Cloud</div>
+        <div class="cert-btn" data-cert="it">IT</div>
+      </div>
+
+      <div class="cert-grid" id="certGrid">
+        <a href="https://coursera.org/share/c8cb899a0ceeea3b1dba16e03d9d507b" target="_blank" rel="noopener" class="card cert-card" data-type="ai">
+          <h3>IBM</h3>
+          <p>IBM AI Engineering Professional Certificate</p>
+        </a>
+
+        <a href="https://coursera.org/share/54f959f4fa1361cd6ae6d1d01d55501a" target="_blank" rel="noopener" class="card cert-card" data-type="it">
+          <h3>Google</h3>
+          <p>Google IT Support Professional Certificate</p>
+        </a>
+
+        <a href="https://coursera.org/share/33a4e917cfb6ff24d4e21e3d23f017c0" target="_blank" rel="noopener" class="card cert-card" data-type="ai">
+          <h3>Google</h3>
+          <p>Google Advanced Data Analytics Professional Certificate</p>
+        </a>
+
+        <a href="https://coursera.org/share/002be285d28b81032d9b67dab13897dc" target="_blank" rel="noopener" class="card cert-card" data-type="cloud">
+          <h3>Google Cloud</h3>
+          <p>Google Cloud AI Infrastructure Specialization</p>
+        </a>
+
+        <a href="https://www.theforage.com/completion-certificates/YtWaumzWHmKiqP63y/6kHAwSGXGCZuiFXKb_YtWaumzWHmKiqP63y_J6DjkFRpnHcRsKexE_1766914646800_completion_certificate.pdf" target="_blank" rel="noopener" class="card cert-card" data-type="cloud">
+          <h3>SIEMENS</h3>
+          <p>Commercial Project Manager Job Simulation (Forage)</p>
+        </a>
+
+        <a href="https://www.theforage.com/completion-certificates/uu47f3odrfruEWjKw/aNJGnRtgfiK5fQqcR_uu47f3odrfruEWjKw_J6DjkFRpnHcRsKexE_1766913858775_completion_certificate.pdf" target="_blank" rel="noopener" class="card cert-card" data-type="cloud">
+          <h3>Cloud</h3>
+          <p>Cloud Platform Job Simulation</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal" id="projectModal">
+  <div class="modal-content">
+    <div class="modal-close" id="modalClose">✕</div>
+    <h2 id="modalTitle" style="color:#F76902; margin:0;"></h2>
+    <p id="modalBody" style="margin-top:15px; line-height:1.7;"></p>
+  </div>
+</div>
+
+<footer>
+  © 2026 Kacy Tran
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+let gameRunning = false;
+let playerPos = 10;
+let vehicles = [];
+let animationFrame;
+
+const gameArea = document.getElementById("gameArea");
+const player = document.getElementById("player");
+const statusText = document.getElementById("trafficStatus");
+
+const lanes = [40, 90, 140, 190, 240];
+
+function startTrafficGame(){
+  resetGame();
+  gameRunning = true;
+  statusText.innerText = "Cross carefully...";
+  spawnVehicle();
+  gameLoop();
+}
+
+function resetGame(){
+  gameRunning = false;
+  playerPos = 10;
+  player.style.bottom = playerPos + "px";
+  vehicles.forEach(v => v.el.remove());
+  vehicles = [];
+  cancelAnimationFrame(animationFrame);
+  statusText.innerText = "";
+}
+
+function moveForward(){
+  if(!gameRunning) return;
+
+  playerPos += 25;
+  player.style.bottom = playerPos + "px";
+
+  if(playerPos > 260){
+    statusText.innerText = "You survived Hanoi traffic! ";
+    gameRunning = false;
+  }
+}
+
+function spawnVehicle(){
+  if(!gameRunning) return;
+
+  const vehicle = document.createElement("div");
+
+  
+  const isCar = Math.random() > 0.5;
+  vehicle.innerText = isCar ? "🚗" : "🛵";
+  vehicle.style.fontSize = isCar ? "26px" : "22px";
+
+  vehicle.style.position = "absolute";
+  vehicle.style.left = "-40px";
+
+ 
+  const lane = lanes[Math.floor(Math.random() * lanes.length)];
+  vehicle.style.top = lane + "px";
+
+  gameArea.appendChild(vehicle);
+
+  vehicles.push({
+    el: vehicle,
+    speed: isCar ? 3 : 5  
+  });
+
+  setTimeout(spawnVehicle, 900);
+}
+
+function gameLoop(){
+  if(!gameRunning) return;
+
+  vehicles.forEach((v, index) => {
+    const currentLeft = parseFloat(v.el.style.left);
+    v.el.style.left = currentLeft + v.speed + "px";
+
+   
+    if(currentLeft > 350){
+      v.el.remove();
+      vehicles.splice(index, 1);
+      return;
+    }
+
+   
+    const vehicleRect = v.el.getBoundingClientRect();
+    const playerRect = player.getBoundingClientRect();
+
+    if(
+      vehicleRect.left < playerRect.right &&
+      vehicleRect.right > playerRect.left &&
+      vehicleRect.top < playerRect.bottom &&
+      vehicleRect.bottom > playerRect.top
+    ){
+      statusText.innerText = "You got hit! Try again";
+      gameRunning = false;
+    }
+  });
+
+  animationFrame = requestAnimationFrame(gameLoop);
+}
+
+document.getElementById("startGameBtn")
+  .addEventListener("click", startTrafficGame);
+
+document.getElementById("moveBtn")
+  .addEventListener("click", moveForward);
+
+document.getElementById("startGameBtn")
+  .addEventListener("click", startTrafficGame);
+
+document.getElementById("moveBtn")
+  .addEventListener("click", moveForward);
+
+function brewCoffeeAdvanced(){
+
+  const checked = Array.from(
+    document.querySelectorAll("#coffeeLab input:checked")
+  );
+
+  const values = checked.map(el => el.value);
+  const totalCost = checked.reduce((sum, el) => sum + Number(el.dataset.cost), 0);
+
+  document.getElementById("coffeeCost").innerText = totalCost;
+
+  let flavor = [];
+  let result = "Experimental Blend ";
+
+ 
+  if(values.includes("robusta")) flavor.push("Strong");
+  if(values.includes("arabica")) flavor.push("Smooth");
+  if(values.includes("condensed")) flavor.push("Sweet");
+  if(values.includes("egg")) flavor.push("Creamy");
+  if(values.includes("coconut")) flavor.push("Tropical");
+  if(values.includes("ice")) flavor.push("Refreshing");
+
+  document.getElementById("flavorProfile").innerText = flavor.join(", ") || "None";
+
+
+  if(values.includes("robusta") && values.includes("condensed") && values.includes("ice")){
+    result = "You made Cà Phê Sữa Đá 🇻🇳";
+  }
+
+  if(values.includes("robusta") && values.includes("egg")){
+    result = "You made Hanoi Egg Coffee ";
+  }
+
+  if(values.includes("robusta") && values.includes("coconut")){
+    result = "You made Coconut Coffee";
+  }
+
+  if(values.includes("arabica") && values.includes("chocolate")){
+    result = "Modern Fusion Coffee";
+  }
+
+  document.getElementById("coffeeResult").innerText = result;
+}
+window.brewCoffeeAdvanced = brewCoffeeAdvanced;
+
+  function showSection(id){
+    const sections = document.querySelectorAll(".section");
+    sections.forEach(sec => sec.classList.remove("active"));
+    const target = document.getElementById(id);
+    if(target) target.classList.add("active");
+  }
+  window.showSection = showSection;
+
+ 
+  const heatmap = document.getElementById("heatmap");
+  const detailBox = document.getElementById("contributionDetail");
+  const title = document.querySelector(".contribution-title");
+
+  const statTotal = document.getElementById("statTotal");
+  const statWeeks = document.getElementById("statWeeks");
+  const statMax = document.getElementById("statMax");
+
+  const contributions = {
+    "2026-01-24": { count:1, level:1 },
+    "2026-01-25": { count:1, level:1 },
+    "2026-01-30": { count:7, level:2 },
+    "2026-01-31": { count:26, level:4 },
+    "2026-02-05": { count:1, level:1 },
+    "2026-02-15": { count:2, level:1 },
+    "2026-02-16": { count:4, level:1 },
+    "2026-02-18": { count:3, level:1 },
+    "2026-02-27": { count:24, level:4 },
+    "2026-02-28": { count:15, level:4 },
+    "2026-03-01": { count:17, level:4 }
+  };
+
+  if(heatmap){
+    heatmap.innerHTML = "";
+
+    let total = 0;
+    let maxDay = 0;
+    const sortedDates = Object.keys(contributions).sort();
+
+    let weekDiv = document.createElement("div");
+    weekDiv.classList.add("week");
+
+    sortedDates.forEach((date, index) => {
+      const dayData = contributions[date];
+      total += dayData.count;
+      if(dayData.count > maxDay) maxDay = dayData.count;
+
+      const day = document.createElement("div");
+      day.classList.add("day", "level-" + dayData.level);
+
+      day.addEventListener("click", function(){
+        if(detailBox){
+          detailBox.innerHTML = `
+            <h3>${new Date(date + "T00:00:00").toDateString()}</h3>
+            <p><strong>${dayData.count}</strong> contribution${dayData.count !== 1 ? "s" : ""}</p>
+          `;
+        }
+      });
+
+      weekDiv.appendChild(day);
+
+      if((index + 1) % 7 === 0){
+        heatmap.appendChild(weekDiv);
+        weekDiv = document.createElement("div");
+        weekDiv.classList.add("week");
+      }
+    });
+
+    heatmap.appendChild(weekDiv);
+
+    if(title){
+      title.textContent = total + " contributions (sample data from Kacy's Github)";
+    }
+    if(statTotal) statTotal.textContent = String(total);
+    if(statWeeks) statWeeks.textContent = String(Math.ceil(sortedDates.length / 7));
+    if(statMax) statMax.textContent = String(maxDay);
+  }
+
+  
+  const cards = document.querySelectorAll(".project-card");
+  const modal = document.getElementById("projectModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalBody = document.getElementById("modalBody");
+  const modalClose = document.getElementById("modalClose");
+
+  
+  document.querySelectorAll(".project-btn").forEach(btn=>{
+    btn.addEventListener("click", (e)=> e.stopPropagation());
+  });
+
+  if(modal){
+    cards.forEach(card=>{
+      card.addEventListener("click", ()=>{
+        modalTitle.textContent = card.dataset.title || "";
+        modalBody.textContent = card.dataset.content || "";
+        modal.classList.add("active");
+      });
+    });
+
+    modalClose.addEventListener("click", ()=> modal.classList.remove("active"));
+    modal.addEventListener("click", (e)=>{
+      if(e.target === modal) modal.classList.remove("active");
+    });
+  }
+
+ 
+  (function(){
+    const leadList = document.getElementById("leadList");
+    if(!leadList) return;
+
+    const items = Array.from(leadList.querySelectorAll(".timeline-item"));
+    const search = document.getElementById("leadSearch");
+    const tabs = document.getElementById("roleTabs");
+    const expandAllBtn = document.getElementById("expandAllBtn");
+    const collapseAllBtn = document.getElementById("collapseAllBtn");
+
+    function setOpen(el, open){
+      if(open) el.classList.add("open");
+      else el.classList.remove("open");
+    }
+
+    items.forEach(item=>{
+      const t = item.querySelector(".lead-title");
+      if(t){
+        t.addEventListener("click", ()=> setOpen(item, !item.classList.contains("open")));
+      }
+    });
+
+    if(expandAllBtn) expandAllBtn.addEventListener("click", ()=> items.forEach(i=>setOpen(i,true)));
+    if(collapseAllBtn) collapseAllBtn.addEventListener("click", ()=> items.forEach(i=>setOpen(i,false)));
+
+    let activeFilter = "all";
+
+    function applyFilters(){
+      const q = (search?.value || "").trim().toLowerCase();
+
+      items.forEach(item=>{
+        const tags = (item.getAttribute("data-tags") || "").toLowerCase();
+        const matchesTab = (activeFilter === "all") ? true : tags.includes(activeFilter);
+        const matchesSearch = q ? (tags.includes(q) || item.innerText.toLowerCase().includes(q)) : true;
+        item.style.display = (matchesTab && matchesSearch) ? "block" : "none";
+      });
+    }
+
+    if(tabs){
+      tabs.addEventListener("click", (e)=>{
+        const tab = e.target.closest(".role-tab");
+        if(!tab) return;
+
+        Array.from(tabs.querySelectorAll(".role-tab")).forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+
+        activeFilter = tab.getAttribute("data-filter") || "all";
+        applyFilters();
+      });
+    }
+
+    if(search) search.addEventListener("input", applyFilters);
+    applyFilters();
+  })();
+
+  
+  (function(){
+    const filter = document.getElementById("certFilter");
+    const buttons = document.querySelectorAll(".cert-btn");
+    const certCards = document.querySelectorAll(".cert-card");
+    if(!filter || !buttons.length || !certCards.length) return;
+
+    buttons.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        buttons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const type = btn.dataset.cert;
+
+        certCards.forEach(card=>{
+          const cardType = card.dataset.type;
+          card.style.display = (type === "all" || cardType === type) ? "block" : "none";
+        });
+      });
+    });
+  })();
+
+});
+
+
+document.querySelectorAll(".achievement-card").forEach(card=>{
+  card.addEventListener("click", ()=>{
+    const msg = card.dataset.message;
+    const hidden = card.querySelector(".achievement-hidden");
+
+    if(hidden.style.opacity === "1"){
+      hidden.style.opacity = "0";
+      hidden.textContent = "";
+    } else {
+      hidden.textContent = msg;
+      hidden.style.opacity = "1";
+    }
+  });
+});
+</script>
+
+</body>
+</html>
